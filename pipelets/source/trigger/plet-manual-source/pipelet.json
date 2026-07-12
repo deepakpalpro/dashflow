@@ -1,0 +1,18 @@
+{
+  "id": "plet-manual-source",
+  "name": "Manual Source",
+  "version": "1.0.0",
+  "runtime": "Python",
+  "imageRef": "dashflow/plet-manual-source:local",
+  "category": "Source",
+  "description": "Generated runnable implementation for plet-manual-source (source_manual).",
+  "requiredDeploymentKeys": [
+    "region"
+  ],
+  "requiredExecutionKeys": [],
+  "deploymentConfiguration": {
+    "cloud": "aws",
+    "region": "us-east-1"
+  },
+  "executionConfiguration": {}
+}

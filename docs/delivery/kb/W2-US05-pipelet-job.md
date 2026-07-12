@@ -39,7 +39,8 @@ kubectl get nodes
 
 # Build pipelet images into the local store Rancher can pull (IfNotPresent)
 for p in plet-s3-source plet-csv-source plet-rest-source plet-csv-to-json plet-python-filter plet-field-mapper plet-webhook-destination; do
-  docker build -f pipelets/$p/Dockerfile -t "dashflow/${p}:local" pipelets
+  rel=$(python3 -c "import json; print(json.load(open('pipelets/PATHS.json'))['$p'])")
+  docker build -f "pipelets/$rel/Dockerfile" -t "dashflow/${p}:local" pipelets
 done
 
 # API with local + k8s profiles

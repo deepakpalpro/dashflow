@@ -54,19 +54,15 @@ build_push dashflow-ui/Dockerfile . "dashflow/ui"
 build_push mockservice/petstore/Dockerfile mockservice/petstore "dashflow/petstore"
 build_push mockservice/petstore-inventory/Dockerfile mockservice/petstore-inventory "dashflow/petstore-inventory"
 
-# Pipelets (Jobs created by API)
-PIPELETS=(
-  plet-s3-source
-  plet-csv-source
-  plet-rest-source
-  plet-csv-to-json
-  plet-python-filter
-  plet-field-mapper
-  plet-webhook-destination
+# Pipelets (Jobs created by API) — nested source|transformer|destination/<group>/<id>
+while IFS= read -r _df; do
+  _p="$(basename "$(dirname "$_df")")"
+  build_push "$_df" pipelets "dashflow/${_p}"
+done < <(
+  find pipelets/source pipelets/transformer pipelets/destination \
+    -mindepth 2 -maxdepth 2 -type d -name 'plet-*' -exec test -f '{}/Dockerfile' \; \
+    -print 2>/dev/null | sort | while read -r _d; do printf '%s/Dockerfile\n' "$_d"; done
 )
-for p in "${PIPELETS[@]}"; do
-  build_push "pipelets/${p}/Dockerfile" pipelets "dashflow/${p}"
-done
 
 # Optional composite demo pipelet
 if [[ -f pipelets/inventory/Dockerfile ]]; then

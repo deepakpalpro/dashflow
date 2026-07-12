@@ -1,0 +1,18 @@
+{
+  "id": "plet-schedule-source",
+  "name": "Schedule Source",
+  "version": "1.0.0",
+  "runtime": "Python",
+  "imageRef": "dashflow/plet-schedule-source:local",
+  "category": "Source",
+  "description": "Generated runnable implementation for plet-schedule-source (source_manual).",
+  "requiredDeploymentKeys": [
+    "region"
+  ],
+  "requiredExecutionKeys": [],
+  "deploymentConfiguration": {
+    "cloud": "aws",
+    "region": "us-east-1"
+  },
+  "executionConfiguration": {}
+}

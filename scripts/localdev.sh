@@ -48,15 +48,16 @@ SEED_S3=1
 FOLLOW=0
 
 # Catalog pipelets with Dockerfiles (must exist before K8s Jobs / ImagePullBackOff).
-DEFAULT_PIPELET_IDS=(
-  plet-s3-source
-  plet-csv-source
-  plet-rest-source
-  plet-csv-to-json
-  plet-python-filter
-  plet-field-mapper
-  plet-webhook-destination
+# Default: every pipelets/{source|transformer|destination}/*/*/Dockerfile. Override with PIPELET_IDS.
+DEFAULT_PIPELET_IDS=()
+while IFS= read -r _plet_dir; do
+  DEFAULT_PIPELET_IDS+=("$(basename "$_plet_dir")")
+done < <(
+  find "$ROOT/pipelets/source" "$ROOT/pipelets/transformer" "$ROOT/pipelets/destination" \
+    -mindepth 2 -maxdepth 2 -type d -name 'plet-*' 2>/dev/null | sort
 )
+
+
 
 usage() {
   sed -n '2,20p' "$0"
@@ -118,14 +119,29 @@ pipelet_ids() {
   printf '%s\n' "${DEFAULT_PIPELET_IDS[@]}"
 }
 
+pipelet_dockerfile() {
+  local id="$1"
+  local rel
+  if [[ -f "$ROOT/pipelets/PATHS.json" ]]; then
+    rel="$(python3 -c "import json,sys; print(json.load(open(sys.argv[1])).get(sys.argv[2],''))" \
+      "$ROOT/pipelets/PATHS.json" "$id" 2>/dev/null || true)"
+  fi
+  if [[ -n "${rel:-}" && -f "$ROOT/pipelets/$rel/Dockerfile" ]]; then
+    printf '%s\n' "$ROOT/pipelets/$rel/Dockerfile"
+    return 0
+  fi
+  # Fallback: locate by directory name
+  find "$ROOT/pipelets" -type f -path "*/${id}/Dockerfile" | head -n1
+}
+
 build_pipelets() {
   ensure_docker
   local id dockerfile failed=0
   log "Building pipelet images (tag dashflow/<id>:local) into Docker store used by Rancher"
   while IFS= read -r id; do
     [[ -n "$id" ]] || continue
-    dockerfile="$ROOT/pipelets/$id/Dockerfile"
-    if [[ ! -f "$dockerfile" ]]; then
+    dockerfile="$(pipelet_dockerfile "$id")"
+    if [[ -z "$dockerfile" || ! -f "$dockerfile" ]]; then
       log "skip $id (no Dockerfile)"
       continue
     fi

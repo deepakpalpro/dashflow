@@ -10,6 +10,7 @@ Cloud-assemblable, multi-tenant data pipeline platform (lifted from pipeline-pla
 | [`docs/AZURE_ASSEMBLY.md`](docs/AZURE_ASSEMBLY.md) | First cloud assembly: AKS, MySQL, Service Bus, Monitor |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | System architecture |
 | [`docs/LOCALDEV_PIPELINE_GUIDE.md`](docs/LOCALDEV_PIPELINE_GUIDE.md) | Localdev + K8s pipelet runs |
+| [`docs/PIPELET_IMPLEMENTATION_ROADMAP.md`](docs/PIPELET_IMPLEMENTATION_ROADMAP.md) | Pipelet + connector impl-spec roadmap (Waves 0–4) |
 
 ## Assemblies
 

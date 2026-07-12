@@ -1,0 +1,47 @@
+{
+  "format_version": 1,
+  "pipeline": {
+    "name": "null-drop-demo",
+    "description": "Wave 1 processor demo: manual-like rest source → null-drop → null destination",
+    "status": "active",
+    "execution_config": {
+      "ioMode": "queue"
+    }
+  },
+  "connectors": [
+    {
+      "ref": "ct-rest::Petstore Inventory Catalog",
+      "connector_type_id": "ct-rest",
+      "name": "Petstore Inventory Catalog",
+      "config": {
+        "baseUrl": "http://host.docker.internal:4011"
+      }
+    }
+  ],
+  "steps": [
+    {
+      "pipelet_id": "plet-rest-source",
+      "step_order": 1,
+      "connector_refs": ["ct-rest::Petstore Inventory Catalog"],
+      "service_refs": [],
+      "deployment_config": { "region": "us-east-1" },
+      "execution_config": { "path": "/inventory", "method": "GET" }
+    },
+    {
+      "pipelet_id": "plet-null-drop",
+      "step_order": 2,
+      "connector_refs": [],
+      "service_refs": [],
+      "deployment_config": { "region": "us-east-1" },
+      "execution_config": {}
+    },
+    {
+      "pipelet_id": "plet-null-destination",
+      "step_order": 3,
+      "connector_refs": [],
+      "service_refs": [],
+      "deployment_config": { "region": "us-east-1" },
+      "execution_config": {}
+    }
+  ]
+}

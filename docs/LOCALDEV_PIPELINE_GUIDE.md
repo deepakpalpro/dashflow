@@ -100,7 +100,8 @@ Jobs use `imagePullPolicy: IfNotPresent` and tags `dashflow/<pipeletId>:local`. 
 
 ```bash
 for p in plet-s3-source plet-csv-source plet-rest-source plet-csv-to-json plet-python-filter plet-field-mapper plet-webhook-destination; do
-  docker build -f "pipelets/$p/Dockerfile" -t "dashflow/${p}:local" pipelets
+  rel=$(python3 -c "import json; print(json.load(open('pipelets/PATHS.json'))['$p'])")
+  docker build -f "pipelets/$rel/Dockerfile" -t "dashflow/${p}:local" pipelets
 done
 
 docker images 'dashflow/plet-*' --format '{{.Repository}}:{{.Tag}}'
@@ -244,7 +245,8 @@ Observability page also lists run history and links to Grafana when `PIPELINE_OB
 ```bash
 ./scripts/localdev.sh start --k8s --with-metrics
 for p in plet-s3-source plet-csv-source plet-rest-source plet-csv-to-json plet-python-filter plet-field-mapper plet-webhook-destination; do
-  docker build -f pipelets/$p/Dockerfile -t "dashflow/${p}:local" pipelets
+  rel=$(python3 -c "import json; print(json.load(open('pipelets/PATHS.json'))['$p'])")
+  docker build -f "pipelets/$rel/Dockerfile" -t "dashflow/${p}:local" pipelets
 done
 # UI: import sample → Deploy → Run
 kubectl get jobs,pods -n tenant-t001 -w

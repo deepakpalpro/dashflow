@@ -7,8 +7,12 @@
     "runtime": "Python",
     "imageRef": "dashflow/plet-rest-source:local",
     "description": "HTTP GET/POST against a REST connector baseUrl + path; emit JSON payload and records.",
-    "requiredDeploymentKeys": ["region"],
-    "requiredExecutionKeys": ["path"],
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ],
     "connectorType": "rest",
     "active": true,
     "deploymentConfiguration": {
@@ -27,7 +31,7 @@
     "name": "Webhook Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Ingress webhook events via provisioned connector URL.",
     "configSchemaPreview": {
       "type": "object",
@@ -44,14 +48,23 @@
       "batchSize": "100",
       "pollIntervalMs": "5000",
       "connectorId": ""
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-webhook-source:local",
+    "connectorType": "event_listener",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-json-transform",
     "name": "JSON Transform",
     "category": "Processor",
     "version": "1.2.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Map and reshape JSON records between stages.",
     "configSchemaPreview": {
       "type": "object",
@@ -68,7 +81,15 @@
       "parallelism": "1",
       "failOnError": "true",
       "mapping": ""
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-json-transform:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "mapping"
+    ]
   },
   {
     "id": "plet-python-filter",
@@ -79,11 +100,17 @@
     "active": true,
     "imageRef": "dashflow/plet-python-filter:local",
     "description": "Filter records with a safe Python expression over each record (e.g. quantity > 0 and category in ('food','toys')). Bind connector/service as needed; set deployment.region and execution.expression on the step.",
-    "requiredDeploymentKeys": ["region"],
-    "requiredExecutionKeys": ["expression"],
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "expression"
+    ],
     "configSchemaPreview": {
       "type": "object",
-      "required": ["expression"],
+      "required": [
+        "expression"
+      ],
       "properties": {
         "expression": {
           "type": "string",
@@ -107,7 +134,7 @@
     "name": "ADLS Destination",
     "category": "Destination",
     "version": "1.1.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Write batches to Azure Data Lake Storage.",
     "configSchemaPreview": {
       "type": "object",
@@ -126,14 +153,23 @@
       "maxBatchRecords": "500",
       "serviceId": "",
       "path": ""
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-adls-destination:local",
+    "connectorType": "storage",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ]
   },
   {
     "id": "plet-s3-destination",
     "name": "S3 Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Write objects to S3-compatible storage.",
     "configSchemaPreview": {
       "type": "object",
@@ -152,14 +188,23 @@
       "maxBatchRecords": "500",
       "serviceId": "",
       "bucket": ""
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-s3-destination:local",
+    "connectorType": "storage",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ]
   },
   {
     "id": "plet-kafka-source",
     "name": "Kafka Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Consume records from Kafka topics.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -169,7 +214,16 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-kafka-source:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "topic"
+    ]
   },
   {
     "id": "plet-s3-source",
@@ -180,15 +234,30 @@
     "active": true,
     "imageRef": "dashflow/plet-s3-source:local",
     "description": "Ingest a single object from an S3-compatible bucket. Set deployment.region and execution.objectKey on the pipeline step; bind a storage connector (bucket) and optional auth service for credentials.",
-    "requiredDeploymentKeys": ["region"],
-    "requiredExecutionKeys": ["objectKey"],
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ],
+    "connectorType": "storage",
     "configSchemaPreview": {
       "type": "object",
-      "required": ["objectKey"],
+      "required": [
+        "objectKey"
+      ],
       "properties": {
-        "objectKey": { "type": "string", "description": "S3 object key to fetch" },
-        "key": { "type": "string", "description": "Alias for objectKey" },
-        "batchSize": { "type": "string" }
+        "objectKey": {
+          "type": "string",
+          "description": "S3 object key to fetch"
+        },
+        "key": {
+          "type": "string",
+          "description": "Alias for objectKey"
+        },
+        "batchSize": {
+          "type": "string"
+        }
       }
     },
     "deploymentConfiguration": {
@@ -206,7 +275,7 @@
     "name": "GCS Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Ingest objects from Google Cloud Storage.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -216,14 +285,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-gcs-source:local",
+    "connectorType": "storage",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ]
   },
   {
     "id": "plet-jdbc-source",
     "name": "JDBC Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Query relational databases into the pipeline.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -233,14 +311,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-jdbc-source:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "query"
+    ]
   },
   {
     "id": "plet-mongodb-source",
     "name": "MongoDB Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Change-stream or collection scan from MongoDB.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -250,14 +337,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-mongodb-source:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "query"
+    ]
   },
   {
     "id": "plet-salesforce-source",
     "name": "Salesforce Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Pull CRM objects via Salesforce APIs.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -267,14 +363,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-salesforce-source:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-file-watch-source",
     "name": "File Watch Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Watch local or mounted paths for new files.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -284,14 +389,22 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-file-watch-source:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-ftp-source",
     "name": "FTP Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Poll FTP/SFTP directories for inbound files.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -301,14 +414,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-ftp-source:local",
+    "connectorType": "storage",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ]
   },
   {
     "id": "plet-pub-sub-source",
     "name": "Pub/Sub Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Subscribe to Google Pub/Sub topics.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -318,14 +440,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-pub-sub-source:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "subscription"
+    ]
   },
   {
     "id": "plet-sqs-source",
     "name": "SQS Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Consume messages from Amazon SQS.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -335,14 +466,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-sqs-source:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "queueName"
+    ]
   },
   {
     "id": "plet-event-hub-source",
     "name": "Event Hub Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Ingest Azure Event Hubs events.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -352,14 +492,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-event-hub-source:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "hubName"
+    ]
   },
   {
     "id": "plet-snowflake-source",
     "name": "Snowflake Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Extract rows from Snowflake tables.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -369,14 +518,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-snowflake-source:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "query"
+    ]
   },
   {
     "id": "plet-bigquery-source",
     "name": "BigQuery Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Extract rows from BigQuery tables.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -386,7 +544,16 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-bigquery-source:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "query"
+    ]
   },
   {
     "id": "plet-csv-source",
@@ -394,10 +561,15 @@
     "category": "Source",
     "version": "1.0.0",
     "runtime": "Python",
+    "active": true,
     "imageRef": "dashflow/plet-csv-source:local",
     "description": "Fetch a delimited file from object storage and emit parsed JSON records.",
-    "requiredDeploymentKeys": ["region"],
-    "requiredExecutionKeys": ["objectKey"],
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ],
     "connectorType": "storage",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -416,7 +588,7 @@
     "name": "Avro Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Decode Avro-encoded payloads.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -426,14 +598,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-avro-source:local",
+    "connectorType": "storage",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ]
   },
   {
     "id": "plet-parquet-source",
     "name": "Parquet Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Read Parquet batches from object storage.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -443,14 +624,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-parquet-source:local",
+    "connectorType": "storage",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ]
   },
   {
     "id": "plet-graphql-source",
     "name": "GraphQL Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Poll GraphQL APIs for entities.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -460,14 +650,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-graphql-source:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-imap-source",
     "name": "IMAP Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Ingest email attachments and bodies.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -477,14 +676,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-imap-source:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-iot-hub-source",
     "name": "IoT Hub Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Ingest device telemetry from IoT Hub.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -494,14 +702,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-iot-hub-source:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "hubName"
+    ]
   },
   {
     "id": "plet-cdc-source",
     "name": "CDC Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Capture change data from transactional DBs.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -511,14 +728,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-cdc-source:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "query"
+    ]
   },
   {
     "id": "plet-schedule-source",
     "name": "Schedule Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Emit timer ticks on a cron schedule.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -528,14 +754,19 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-schedule-source:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-manual-source",
     "name": "Manual Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Accept ad-hoc payloads from the UI/API.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -545,14 +776,19 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-manual-source:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-redis-stream-source",
     "name": "Redis Stream Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Consume Redis Streams.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -562,14 +798,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-redis-stream-source:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "stream"
+    ]
   },
   {
     "id": "plet-nats-source",
     "name": "NATS Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Subscribe to NATS subjects.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -579,14 +824,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-nats-source:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "subject"
+    ]
   },
   {
     "id": "plet-amqp-source",
     "name": "AMQP Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Consume AMQP queues.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -596,14 +850,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-amqp-source:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "queue"
+    ]
   },
   {
     "id": "plet-http-poll-source",
     "name": "HTTP Poll Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Periodically poll HTTP endpoints.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -613,14 +876,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-http-poll-source:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-sharepoint-source",
     "name": "SharePoint Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Ingest documents from SharePoint.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -630,14 +902,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-sharepoint-source:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-dropbox-source",
     "name": "Dropbox Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Ingest files from Dropbox folders.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -647,14 +928,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-dropbox-source:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-onedrive-source",
     "name": "OneDrive Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Ingest files from OneDrive.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -664,14 +954,23 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-onedrive-source:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-slack-source",
     "name": "Slack Source",
     "category": "Source",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Receive Slack events and messages.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -681,7 +980,16 @@
     "executionConfiguration": {
       "batchSize": "100",
       "pollIntervalMs": "5000"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-slack-source:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-field-mapper",
@@ -692,14 +1000,26 @@
     "active": true,
     "imageRef": "dashflow/plet-field-mapper:local",
     "description": "Rename/project record fields via execution.mapping. Modes: map (records only) or upsert/replace (wrap as {mode, items}). Set deployment.region and execution.mode on the step.",
-    "requiredDeploymentKeys": ["region"],
-    "requiredExecutionKeys": ["mode"],
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "mode"
+    ],
     "configSchemaPreview": {
       "type": "object",
-      "required": ["mode"],
+      "required": [
+        "mode"
+      ],
       "properties": {
-        "mode": { "type": "string", "description": "upsert | replace for Petstore bulk upload" },
-        "mapping": { "type": "string", "description": "Optional field mapping spec" }
+        "mode": {
+          "type": "string",
+          "description": "upsert | replace for Petstore bulk upload"
+        },
+        "mapping": {
+          "type": "string",
+          "description": "Optional field mapping spec"
+        }
       }
     },
     "deploymentConfiguration": {
@@ -719,7 +1039,7 @@
     "name": "Schema Validator",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Validate records against a JSON schema.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -729,14 +1049,22 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-schema-validator:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "schema"
+    ]
   },
   {
     "id": "plet-deduplicator",
     "name": "Deduplicator",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Drop duplicate records by key.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -746,14 +1074,22 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-deduplicator:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "keyFields"
+    ]
   },
   {
     "id": "plet-aggregator",
     "name": "Aggregator",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Windowed aggregates over record streams.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -763,14 +1099,22 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-aggregator:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "groupBy"
+    ]
   },
   {
     "id": "plet-joiner",
     "name": "Joiner",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Join two streams on a key.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -780,14 +1124,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-joiner:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-splitter",
     "name": "Splitter",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Split array fields into multiple records.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -797,14 +1146,22 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-splitter:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "field"
+    ]
   },
   {
     "id": "plet-enricher",
     "name": "Enricher",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Lookup and enrich records from a service.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -814,14 +1171,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-enricher:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-masker",
     "name": "Masker",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Mask PII fields before downstream stages.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -831,14 +1193,22 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-masker:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "fields"
+    ]
   },
   {
     "id": "plet-hasher",
     "name": "Hasher",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Hash sensitive fields for anonymization.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -848,14 +1218,22 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-hasher:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "fields"
+    ]
   },
   {
     "id": "plet-rate-limiter",
     "name": "Rate Limiter",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Throttle throughput to protect sinks.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -865,14 +1243,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-rate-limiter:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-retry-buffer",
     "name": "Retry Buffer",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Buffer failed records for retry.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -882,14 +1265,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-retry-buffer:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-branch-router",
     "name": "Branch Router",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Route records by expression to branches.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -899,7 +1287,12 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-branch-router:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-xml-to-json",
@@ -916,7 +1309,12 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-xml-to-json:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-csv-to-json",
@@ -927,14 +1325,24 @@
     "active": true,
     "imageRef": "dashflow/plet-csv-to-json:local",
     "description": "Convert CSV text (message.csv / content) into JSON records. Set deployment.region and execution.delimiter on the step.",
-    "requiredDeploymentKeys": ["region"],
-    "requiredExecutionKeys": ["delimiter"],
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "delimiter"
+    ],
     "configSchemaPreview": {
       "type": "object",
-      "required": ["delimiter"],
+      "required": [
+        "delimiter"
+      ],
       "properties": {
-        "delimiter": { "type": "string" },
-        "hasHeader": { "type": "string" }
+        "delimiter": {
+          "type": "string"
+        },
+        "hasHeader": {
+          "type": "string"
+        }
       }
     },
     "deploymentConfiguration": {
@@ -954,7 +1362,7 @@
     "name": "Avro Codec",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Encode or decode Avro payloads.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -964,14 +1372,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-avro-codec:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-compression",
     "name": "Compression",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Compress or decompress payloads.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -981,14 +1394,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-compression:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-encryption",
     "name": "Encryption",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Encrypt or decrypt field values.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -998,14 +1416,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-encryption:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-geo-enrich",
     "name": "Geo Enrich",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Add geo metadata from IP or address.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1015,14 +1438,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-geo-enrich:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-time-window",
     "name": "Time Window",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Assign records to tumbling windows.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1032,14 +1460,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-time-window:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-sample-filter",
     "name": "Sample Filter",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Keep a percentage sample of records.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1049,14 +1482,22 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-sample-filter:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "rate"
+    ]
   },
   {
     "id": "plet-null-drop",
     "name": "Null Drop",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Drop records with null required fields.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1066,14 +1507,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-null-drop:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-type-coercer",
     "name": "Type Coercer",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Coerce field types to a target schema.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1083,14 +1529,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-type-coercer:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-regex-extract",
     "name": "Regex Extract",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Extract fields with regular expressions.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1100,14 +1551,22 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-regex-extract:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "pattern"
+    ]
   },
   {
     "id": "plet-lookup-cache",
     "name": "Lookup Cache",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Cache remote lookups for enrichment.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1117,7 +1576,12 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-lookup-cache:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-script-transform",
@@ -1134,7 +1598,12 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-script-transform:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-ml-scorer",
@@ -1151,14 +1620,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-ml-scorer:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-anomaly-flag",
     "name": "Anomaly Flag",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Flag anomalous records for review.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1168,14 +1642,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-anomaly-flag:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-unit-converter",
     "name": "Unit Converter",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Convert units across numeric fields.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1185,14 +1664,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-unit-converter:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-currency-fx",
     "name": "Currency FX",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Convert currency amounts.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1202,7 +1686,12 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-currency-fx:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-html-strip",
@@ -1219,14 +1708,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-html-strip:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-language-detect",
     "name": "Language Detect",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Detect language of text fields.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1236,14 +1730,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-language-detect:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-sentiment-tag",
     "name": "Sentiment Tag",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Tag sentiment on text fields.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1253,14 +1752,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-sentiment-tag:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-entity-extract",
     "name": "Entity Extract",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Extract named entities from text.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1270,14 +1774,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-entity-extract:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-json-path",
     "name": "JSON Path",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Project nested JSON via JSONPath.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1287,14 +1796,22 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-json-path:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-flatten",
     "name": "Flatten",
     "category": "Processor",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Flatten nested objects into columns.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1304,14 +1821,19 @@
     "executionConfiguration": {
       "parallelism": "1",
       "failOnError": "true"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-flatten:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-kafka-destination",
     "name": "Kafka Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Publish records to Kafka topics.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1321,14 +1843,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-kafka-destination:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "topic"
+    ]
   },
   {
     "id": "plet-jdbc-destination",
     "name": "JDBC Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Upsert rows into relational tables.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1338,14 +1869,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-jdbc-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-mongodb-destination",
     "name": "MongoDB Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Write documents to MongoDB.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1355,14 +1895,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-mongodb-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-elasticsearch-destination",
     "name": "Elasticsearch Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Index documents into Elasticsearch.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1372,14 +1921,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-elasticsearch-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-snowflake-destination",
     "name": "Snowflake Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Load batches into Snowflake.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1389,14 +1947,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-snowflake-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-bigquery-destination",
     "name": "BigQuery Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Load batches into BigQuery.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1406,14 +1973,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-bigquery-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-gcs-destination",
     "name": "GCS Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Write objects to Google Cloud Storage.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1423,14 +1999,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-gcs-destination:local",
+    "connectorType": "storage",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ]
   },
   {
     "id": "plet-azure-blob-destination",
     "name": "Azure Blob Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Write blobs to Azure Blob Storage.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1440,7 +2025,16 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-azure-blob-destination:local",
+    "connectorType": "storage",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ]
   },
   {
     "id": "plet-webhook-destination",
@@ -1451,15 +2045,30 @@
     "active": true,
     "imageRef": "dashflow/plet-webhook-destination:local",
     "description": "POST JSON to connector baseUrl + execution.path. Bind a REST connector; set deployment.region and execution.path on the step.",
-    "requiredDeploymentKeys": ["region"],
-    "requiredExecutionKeys": ["path"],
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ],
+    "connectorType": "rest",
     "configSchemaPreview": {
       "type": "object",
-      "required": ["path"],
+      "required": [
+        "path"
+      ],
       "properties": {
-        "path": { "type": "string", "description": "Path under connector baseUrl, e.g. /inventory/upload" },
-        "method": { "type": "string" },
-        "baseUrl": { "type": "string", "description": "Optional override of connector baseUrl" }
+        "path": {
+          "type": "string",
+          "description": "Path under connector baseUrl, e.g. /inventory/upload"
+        },
+        "method": {
+          "type": "string"
+        },
+        "baseUrl": {
+          "type": "string",
+          "description": "Optional override of connector baseUrl"
+        }
       }
     },
     "deploymentConfiguration": {
@@ -1479,7 +2088,7 @@
     "name": "Email Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Send email notifications from records.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1489,14 +2098,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-email-destination:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-slack-destination",
     "name": "Slack Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Post messages to Slack channels.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1506,14 +2124,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-slack-destination:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-teams-destination",
     "name": "Teams Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Post messages to Microsoft Teams.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1523,14 +2150,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-teams-destination:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-pub-sub-destination",
     "name": "Pub/Sub Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Publish to Google Pub/Sub.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1540,14 +2176,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-pub-sub-destination:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "topic"
+    ]
   },
   {
     "id": "plet-sqs-destination",
     "name": "SQS Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Send messages to Amazon SQS.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1557,14 +2202,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-sqs-destination:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "queueName"
+    ]
   },
   {
     "id": "plet-event-hub-destination",
     "name": "Event Hub Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Publish to Azure Event Hubs.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1574,14 +2228,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-event-hub-destination:local",
+    "connectorType": "message_bus",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "hubName"
+    ]
   },
   {
     "id": "plet-redis-destination",
     "name": "Redis Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Write keys or streams to Redis.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1591,14 +2254,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-redis-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-dynamodb-destination",
     "name": "DynamoDB Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Put items into DynamoDB.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1608,14 +2280,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-dynamodb-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-cosmos-db-destination",
     "name": "Cosmos DB Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Write documents to Cosmos DB.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1625,14 +2306,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-cosmos-db-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-ftp-destination",
     "name": "FTP Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Upload files to FTP/SFTP.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1642,14 +2332,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-ftp-destination:local",
+    "connectorType": "storage",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ]
   },
   {
     "id": "plet-sharepoint-destination",
     "name": "SharePoint Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Upload documents to SharePoint.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1659,14 +2358,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-sharepoint-destination:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-dropbox-destination",
     "name": "Dropbox Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Upload files to Dropbox.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1676,14 +2384,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-dropbox-destination:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-onedrive-destination",
     "name": "OneDrive Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Upload files to OneDrive.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1693,14 +2410,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-onedrive-destination:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-salesforce-destination",
     "name": "Salesforce Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Upsert CRM objects in Salesforce.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1710,14 +2436,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-salesforce-destination:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-hubspot-destination",
     "name": "HubSpot Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Upsert contacts/deals in HubSpot.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1727,14 +2462,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-hubspot-destination:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-databricks-destination",
     "name": "Databricks Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Write to Databricks tables.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1744,14 +2488,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-databricks-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-redshift-destination",
     "name": "Redshift Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Load batches into Redshift.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1761,14 +2514,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-redshift-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-clickhouse-destination",
     "name": "ClickHouse Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Insert into ClickHouse tables.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1778,14 +2540,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-clickhouse-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-prometheus-push",
     "name": "Prometheus Push",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Push metrics to Prometheus gateway.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1795,14 +2566,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-prometheus-push:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-opensearch-destination",
     "name": "OpenSearch Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Index documents into OpenSearch.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1812,14 +2592,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-opensearch-destination:local",
+    "connectorType": "db",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "table"
+    ]
   },
   {
     "id": "plet-file-destination",
     "name": "File Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Write files to a mounted path.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1829,14 +2618,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-file-destination:local",
+    "connectorType": "storage",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ]
   },
   {
     "id": "plet-null-destination",
     "name": "Null Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Discard records (debug sink).",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1846,14 +2644,19 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-null-destination:local",
+    "requiredDeploymentKeys": [
+      "region"
+    ]
   },
   {
     "id": "plet-archive-destination",
     "name": "Archive Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Archive payloads to cold storage.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1863,14 +2666,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-archive-destination:local",
+    "connectorType": "storage",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "objectKey"
+    ]
   },
   {
     "id": "plet-pagerduty-destination",
     "name": "PagerDuty Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Raise incidents from records.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1880,14 +2692,23 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-pagerduty-destination:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   },
   {
     "id": "plet-datadog-destination",
     "name": "Datadog Destination",
     "category": "Destination",
     "version": "1.0.0",
-    "runtime": "Java",
+    "runtime": "Python",
     "description": "Emit events/metrics to Datadog.",
     "deploymentConfiguration": {
       "cloud": "aws",
@@ -1897,6 +2718,15 @@
     "executionConfiguration": {
       "flushIntervalMs": "1000",
       "maxBatchRecords": "500"
-    }
+    },
+    "active": true,
+    "imageRef": "dashflow/plet-datadog-destination:local",
+    "connectorType": "rest",
+    "requiredDeploymentKeys": [
+      "region"
+    ],
+    "requiredExecutionKeys": [
+      "path"
+    ]
   }
 ]
