@@ -8,16 +8,14 @@ WORKDIR /workspace
 COPY pom.xml mvnw mvnw.cmd ./
 COPY .mvn .mvn
 COPY dashflow-spi/pom.xml dashflow-spi/pom.xml
-COPY dashflow-broker-rabbitmq/pom.xml dashflow-broker-rabbitmq/pom.xml
-COPY dashflow-broker-servicebus/pom.xml dashflow-broker-servicebus/pom.xml
+COPY dashflow-broker/pom.xml dashflow-broker/pom.xml
 COPY dashflow-api/pom.xml dashflow-api/pom.xml
 
 RUN chmod +x mvnw \
   && ./mvnw -pl dashflow-api -am dependency:go-offline -B -q || true
 
 COPY dashflow-spi dashflow-spi
-COPY dashflow-broker-rabbitmq dashflow-broker-rabbitmq
-COPY dashflow-broker-servicebus dashflow-broker-servicebus
+COPY dashflow-broker dashflow-broker
 COPY dashflow-api dashflow-api
 
 RUN ./mvnw -pl dashflow-api -am package -DskipTests -B -q

@@ -33,8 +33,7 @@ Connectors/pipelets (S3, Blob, SQS, …) are **out of scope** for platform assem
 ## Modules
 
 - `dashflow-spi` — `MessageBroker`, logical destinations
-- `dashflow-broker-rabbitmq` — default adapter
-- `dashflow-broker-servicebus` — Azure adapter
+- `dashflow-broker` — MessageBroker adapters (RabbitMQ, Azure Service Bus)
 - `dashflow-api` — Spring Boot control plane
 - `dashflow-ui` — React builder UI
 

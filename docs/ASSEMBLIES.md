@@ -29,8 +29,7 @@ Select the Spring profile that matches the assembly (`local`, `azure`, …).
 | Module | Role |
 |--------|------|
 | `dashflow-spi` | `MessageBroker`, `LogicalDestinations`, `PlatformAssembly` |
-| `dashflow-broker-rabbitmq` | Default / local broker adapter |
-| `dashflow-broker-servicebus` | Azure assembly broker adapter |
+| `dashflow-broker` | MessageBroker adapters (RabbitMQ default / local; Service Bus for Azure) |
 | `dashflow-api` | Control plane |
 
 Only one `MessageBroker` bean is active (`@ConditionalOnProperty dashflow.platform.broker`).

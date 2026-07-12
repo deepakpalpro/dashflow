@@ -21,12 +21,7 @@
     </dependency>
     <dependency>
       <groupId>com.dashflow</groupId>
-      <artifactId>dashflow-broker-rabbitmq</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.dashflow</groupId>
-      <artifactId>dashflow-broker-servicebus</artifactId>
+      <artifactId>dashflow-broker</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>

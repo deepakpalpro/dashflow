@@ -20,8 +20,7 @@
 
   <modules>
     <module>dashflow-spi</module>
-    <module>dashflow-broker-rabbitmq</module>
-    <module>dashflow-broker-servicebus</module>
+    <module>dashflow-broker</module>
     <module>dashflow-api</module>
   </modules>
 
