@@ -7,7 +7,7 @@ kind: Namespace
 metadata:
   name: tenant-t001
   labels:
-    pipeline.platform/tenant: T001
+    dashflow.io/tenant: T001
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -46,8 +46,8 @@ metadata:
   name: inventory-s3-to-petstore
   namespace: tenant-t001
   labels:
-    pipeline.platform/pipeline: inventory-daily
-    pipeline.platform/pipelet: inventory-batch
+    dashflow.io/pipeline: inventory-daily
+    dashflow.io/pipelet: inventory-batch
 spec:
   backoffLimit: 1
   ttlSecondsAfterFinished: 600

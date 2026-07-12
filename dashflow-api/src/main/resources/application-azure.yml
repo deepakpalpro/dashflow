@@ -32,6 +32,8 @@ pipeline:
   k8s:
     enabled: true
     image-pull-policy: IfNotPresent
+    # Override in AKS with full ACR pattern, e.g.:
+    # PIPELINE_K8S_DEFAULT_IMAGE_PATTERN=<acr>.azurecr.io/dashflow/{pipeletId}:0.1.0
     default-image-pattern: "dashflow/{pipeletId}:${DASHFLOW_IMAGE_TAG:latest}"
     create-namespace: true
 

@@ -52,14 +52,8 @@ pipeline:
     ttl-seconds-after-finished: 600
     backoff-limit: 2
     job-status-poll-interval-ms: 2000
+    # Only non-standard IDs → image names. Catalog plet-* IDs use default-image-pattern.
     images:
-      plet-s3-source: dashflow/plet-s3-source:local
-      plet-csv-source: dashflow/plet-csv-source:local
-      plet-rest-source: dashflow/plet-rest-source:local
-      plet-csv-to-json: dashflow/plet-csv-to-json:local
-      plet-python-filter: dashflow/plet-python-filter:local
-      plet-field-mapper: dashflow/plet-field-mapper:local
-      plet-webhook-destination: dashflow/plet-webhook-destination:local
       inventory-batch: dashflow/inventory-pipelet:local
       webhook-processor: dashflow/plet-python-filter:local
   webhook:

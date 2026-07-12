@@ -1,0 +1,10 @@
+target/
+.idea/
+.localdev/
+**/.git/
+**/node_modules/
+**/__pycache__/
+**/.venv/
+dashflow-ui/dist/
+*.log
+.DS_Store

@@ -39,7 +39,7 @@ class PipeletJobManifestFactoryTest {
     assertThat(job.getMetadata().getNamespace()).isEqualTo("tenant-t001");
     assertThat(job.getMetadata().getName()).isEqualTo("exec-exec-1-stage-1");
     assertThat(job.getMetadata().getLabels())
-        .containsEntry("pipeline.platform/pipelet_id", "plet-csv-to-json");
+        .containsEntry(PipeletK8sLabels.PIPELET_ID, "plet-csv-to-json");
 
     Map<String, String> env =
         job.getSpec().getTemplate().getSpec().getContainers().get(0).getEnv().stream()

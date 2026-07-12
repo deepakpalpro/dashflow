@@ -140,8 +140,8 @@ export function ExecutionDebugPanel({
   const stubSmell = looksLikeStub(
     matchedPoll ?? matchedDetail ?? null,
   )
-  const kubectlJobs = `kubectl get jobs,pods -n ${ns} -l pipeline.platform/execution_id=${executionId}`
-  const kubectlLogs = `kubectl logs -n ${ns} -l pipeline.platform/execution_id=${executionId} --tail=100`
+  const kubectlJobs = `kubectl get jobs,pods -n ${ns} -l dashflow.io/execution_id=${executionId}`
+  const kubectlLogs = `kubectl logs -n ${ns} -l dashflow.io/execution_id=${executionId} --tail=100`
   const petstore = `curl -s http://localhost:4010/api/v3/inventory/summary | python3 -m json.tool`
   const apiExec =
     pipelineId != null

@@ -101,7 +101,7 @@ class Fabric8PipeletJobClientIT {
     assertThat(job.getSpec().getTemplate().getSpec().getContainers().get(0).getImage())
         .isEqualTo("busybox:1.36");
     assertThat(job.getMetadata().getLabels())
-        .containsEntry("pipeline.platform/pipelet_id", "plet-csv-to-json");
+        .containsEntry(PipeletK8sLabels.PIPELET_ID, "plet-csv-to-json");
   }
 
   private static boolean clusterReachable() {

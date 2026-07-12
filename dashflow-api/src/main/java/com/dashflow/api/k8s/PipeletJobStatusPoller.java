@@ -128,7 +128,7 @@ public class PipeletJobStatusPoller {
             .v1()
             .jobs()
             .inNamespace(namespace)
-            .withLabel("pipeline.platform/execution_id", execution.getId())
+            .withLabel(PipeletK8sLabels.EXECUTION_ID, execution.getId())
             .list()
             .getItems();
 
@@ -285,7 +285,7 @@ public class PipeletJobStatusPoller {
     }
     String pipeletId =
         job.getMetadata() != null && job.getMetadata().getLabels() != null
-            ? job.getMetadata().getLabels().getOrDefault("pipeline.platform/pipelet_id", "unknown")
+            ? job.getMetadata().getLabels().getOrDefault(PipeletK8sLabels.PIPELET_ID, "unknown")
             : "unknown";
     PipeletErrorType errorType =
         reasonOverride != null && PipeletPodDiagnostics.isImagePullFailure(extractReasonToken(reasonOverride))
@@ -326,8 +326,8 @@ public class PipeletJobStatusPoller {
       if (stage != null) {
         pods =
             podOp
-                .withLabel("pipeline.platform/execution_id", executionId)
-                .withLabel("pipeline.platform/stage_order", String.valueOf(stage))
+                .withLabel(PipeletK8sLabels.EXECUTION_ID, executionId)
+                .withLabel(PipeletK8sLabels.STAGE_ORDER, String.valueOf(stage))
                 .list()
                 .getItems();
       } else if (job.getMetadata() != null && job.getMetadata().getName() != null) {
@@ -385,8 +385,8 @@ public class PipeletJobStatusPoller {
           kubernetesClient
               .pods()
               .inNamespace(namespace)
-              .withLabel("pipeline.platform/execution_id", executionId)
-              .withLabel("pipeline.platform/stage_order", String.valueOf(stage))
+              .withLabel(PipeletK8sLabels.EXECUTION_ID, executionId)
+              .withLabel(PipeletK8sLabels.STAGE_ORDER, String.valueOf(stage))
               .list()
               .getItems();
       long best = 0L;
@@ -425,7 +425,7 @@ public class PipeletJobStatusPoller {
 
   private static String pipeletId(Job job, List<PipelineStep> steps, int stage) {
     if (job.getMetadata() != null && job.getMetadata().getLabels() != null) {
-      String fromLabel = job.getMetadata().getLabels().get("pipeline.platform/pipelet_id");
+      String fromLabel = job.getMetadata().getLabels().get(PipeletK8sLabels.PIPELET_ID);
       if (fromLabel != null && !fromLabel.isBlank()) {
         return fromLabel;
       }
@@ -510,7 +510,7 @@ public class PipeletJobStatusPoller {
     if (job.getMetadata() == null || job.getMetadata().getLabels() == null) {
       return null;
     }
-    String raw = job.getMetadata().getLabels().get("pipeline.platform/stage_order");
+    String raw = job.getMetadata().getLabels().get(PipeletK8sLabels.STAGE_ORDER);
     if (raw == null || raw.isBlank()) {
       return null;
     }

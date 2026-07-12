@@ -178,7 +178,7 @@ class PipeletJobStatusPollerTest {
     when(executionRepository.findByStatus(ExecutionStatus.RUNNING)).thenReturn(List.of(execution));
 
     Job pending = job(1, false, false, null);
-    pending.getMetadata().getLabels().put("pipeline.platform/pipelet_id", "plet-rest-source");
+    pending.getMetadata().getLabels().put(PipeletK8sLabels.PIPELET_ID, "plet-rest-source");
     JobList list = new JobList();
     list.setItems(List.of(pending));
     when(labeledOp.list()).thenReturn(list);
@@ -241,7 +241,7 @@ class PipeletJobStatusPollerTest {
     ObjectMeta meta = new ObjectMeta();
     meta.setName("exec-exec-1-stage-" + stage);
     meta.setLabels(
-        new HashMap<>(Map.of("pipeline.platform/stage_order", String.valueOf(stage))));
+        new HashMap<>(Map.of(PipeletK8sLabels.STAGE_ORDER, String.valueOf(stage))));
     job.setMetadata(meta);
     JobStatus status = new JobStatus();
     if (complete) {

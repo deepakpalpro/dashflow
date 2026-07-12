@@ -166,8 +166,8 @@ Expect Jobs named like `exec-<executionId>-stage-1` … `stage-5`.
 
 ```bash
 EID=<execution-id>
-kubectl logs -n tenant-t001 -l pipeline.platform/execution_id=$EID,pipeline.platform/stage_order=1 --tail=80
-kubectl logs -n tenant-t001 -l pipeline.platform/execution_id=$EID,pipeline.platform/stage_order=5 --tail=80
+kubectl logs -n tenant-t001 -l dashflow.io/execution_id=$EID,dashflow.io/stage_order=1 --tail=80
+kubectl logs -n tenant-t001 -l dashflow.io/execution_id=$EID,dashflow.io/stage_order=5 --tail=80
 ```
 
 ### B. Execution API

@@ -19,3 +19,4 @@ pipelets/**/__pycache__/
 .petstore-e2e.log
 .localdev/
 .m2-repo/
+deploy/k8s/azure/secret.yaml

@@ -49,7 +49,7 @@ public class Fabric8PipeletJobClient implements PipeletJobClient {
               .v1()
               .jobs()
               .inNamespace(namespace)
-              .withLabel("pipeline.platform/execution_id", executionId)
+              .withLabel(PipeletK8sLabels.EXECUTION_ID, executionId)
               .list()
               .getItems();
       if (jobs == null || jobs.isEmpty()) {
@@ -177,7 +177,7 @@ public class Fabric8PipeletJobClient implements PipeletJobClient {
         new NamespaceBuilder()
             .withNewMetadata()
             .withName(namespace)
-            .addToLabels("pipeline.platform/tenant", tenantId == null ? "" : tenantId)
+            .addToLabels(PipeletK8sLabels.TENANT, tenantId == null ? "" : tenantId)
             .endMetadata()
             .build();
     kubernetesClient.namespaces().resource(ns).create();

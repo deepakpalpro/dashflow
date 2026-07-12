@@ -35,11 +35,11 @@ public final class PipeletJobManifestFactory {
     Map<String, String> labels = new LinkedHashMap<>();
     labels.put("app.kubernetes.io/name", "pipelet");
     labels.put("app.kubernetes.io/managed-by", "dashflow");
-    labels.put("pipeline.platform/tenant_id", nullToEmpty(request.tenantId()));
-    labels.put("pipeline.platform/pipeline_id", nullToEmpty(request.pipelineId()));
-    labels.put("pipeline.platform/execution_id", nullToEmpty(request.executionId()));
-    labels.put("pipeline.platform/pipelet_id", nullToEmpty(request.pipeletId()));
-    labels.put("pipeline.platform/stage_order", String.valueOf(request.stageOrder()));
+    labels.put(PipeletK8sLabels.TENANT_ID, nullToEmpty(request.tenantId()));
+    labels.put(PipeletK8sLabels.PIPELINE_ID, nullToEmpty(request.pipelineId()));
+    labels.put(PipeletK8sLabels.EXECUTION_ID, nullToEmpty(request.executionId()));
+    labels.put(PipeletK8sLabels.PIPELET_ID, nullToEmpty(request.pipeletId()));
+    labels.put(PipeletK8sLabels.STAGE_ORDER, String.valueOf(request.stageOrder()));
 
     List<EnvVar> env = new ArrayList<>();
     env.add(env("TENANT_ID", request.tenantId()));

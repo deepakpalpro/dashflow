@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: dashflow
+resources:
+  - namespace.yaml
+  - rbac.yaml
+  - secret.example.yaml
+  - mysql.yaml
+  - rabbitmq.yaml
+  - api.yaml
+  - ui.yaml
+  - petstore.yaml
+  - petstore-inventory.yaml
+images:
+  - name: dashflow/api
+    newName: dashflow/api
+    newTag: latest
+  - name: dashflow/ui
+    newName: dashflow/ui
+    newTag: latest
+  - name: dashflow/petstore
+    newName: dashflow/petstore
+    newTag: latest
+  - name: dashflow/petstore-inventory
+    newName: dashflow/petstore-inventory
+    newTag: latest

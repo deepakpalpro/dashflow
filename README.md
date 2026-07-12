@@ -50,3 +50,12 @@ Requires Docker, Java 21, Node 20+.
 ```bash
 ./mvnw -pl dashflow-api -am test
 ```
+
+## Deploy to Azure (Wave A — AKS + ACR)
+
+See [`docs/AZURE_ASSEMBLY.md`](docs/AZURE_ASSEMBLY.md) and [`deploy/k8s/azure/README.md`](deploy/k8s/azure/README.md).
+
+```bash
+./scripts/azure/build-push-acr.sh <acrName> 0.1.0
+./scripts/azure/apply-aks.sh <acrName> 0.1.0
+```
