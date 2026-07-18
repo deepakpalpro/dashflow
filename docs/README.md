@@ -1,6 +1,6 @@
 # dashpipe-suite Documentation
 
-[← Back to home](index.html)
+[← Back to home](/)
 
 Welcome to the Dashpipe documentation hub. Pick a path based on your role.
 

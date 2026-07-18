@@ -1,4 +1,2 @@
-# Disable Jekyll theme processing; we ship a static index.html landing page.
-# Markdown files in this folder still render when linked directly.
-title: Dashpipe
-description: Open-source multi-tenant data pipeline platform
+title: Dashpipe Docs
+description: Documentation for the Dashpipe open-source pipeline platform

@@ -1,52 +1,35 @@
 # GitHub Pages setup
 
-The public site lives in this **`docs/`** folder:
-
-| File | URL |
-|------|-----|
-| [`index.html`](index.html) | Site home (`/` or `https://dashpipe.io/`) |
+| File | Role |
+|------|------|
+| [`../index.html`](../index.html) | Landing page at site root (`/`) |
+| [`website/`](../website/) | CSS, JS, and `CNAME` for custom domain |
 | [`README.md`](README.md) | Documentation hub (`/README`) |
-| [`CNAME`](CNAME) | Custom domain (`dashpipe.io`) |
 
-## Why the landing page is here
+## Publish source
 
-GitHub Pages was serving **`docs/README.md`** at the site root because the repo uses the **`/docs` folder** as the publish source. Adding **`docs/index.html`** takes precedence over `README.md` at `/`.
+**Recommended:** **Settings → Pages → Source → GitHub Actions**
 
-## Enable GitHub Pages
+Push to `main` runs [`.github/workflows/pages.yml`](../.github/workflows/pages.yml):
 
-**Option A — Deploy from branch (simplest)**
+1. Jekyll builds `docs/` into the site
+2. Root `index.html` and `website/` are added; `website/CNAME` is copied to `/CNAME`
 
-1. **Settings → Pages → Build and deployment**
-2. **Source:** Deploy from a branch
-3. **Branch:** `main` · **Folder:** `/docs`
-4. Save. Root URL serves `index.html`; markdown docs render via Jekyll.
+**Alternative:** **Deploy from branch → `/ (root)`**
 
-**Option B — GitHub Actions (CI deploy)**
+`index.html` at repo root is served at `/`. Asset paths use `website/css/` and `website/js/`.
 
-1. **Settings → Pages → Source:** GitHub Actions
-2. Push to `main` runs [`.github/workflows/pages.yml`](../.github/workflows/pages.yml) (Jekyll build + deploy)
+## Custom domain
 
-## Custom domain DNS
+`website/CNAME` contains `dashpipe.io`. On Actions deploy it is copied to the site root.
 
-See [`CNAME`](CNAME) (`dashpipe.io`). Apex **A records** point to GitHub Pages:
-
-| Type | Name | Value |
-|------|------|-------|
-| A | `@` | `185.199.108.153` |
-| A | `@` | `185.199.109.153` |
-| A | `@` | `185.199.110.153` |
-| A | `@` | `185.199.111.153` |
-
-For **`www`**, CNAME to `deepakpalpro.github.io`.
+DNS: apex **A records** to GitHub Pages (`185.199.108.153`, …) or **CNAME** `www` → `deepakpalpro.github.io`.
 
 Then **Settings → Pages → Custom domain** → `dashpipe.io` → **Enforce HTTPS**.
 
 ## Local preview
 
 ```bash
-cd docs
 python3 -m http.server 8088
 # http://localhost:8088/index.html
 ```
-
-For full Jekyll preview: `bundle exec jekyll serve` (requires Ruby).

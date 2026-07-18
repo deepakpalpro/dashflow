@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'docs/**'
+      - 'index.html'
+      - 'website/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -27,11 +29,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build with Jekyll
+      - name: Build docs with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./docs
           destination: ./_site
+
+      - name: Add landing page and website assets
+        run: |
+          cp index.html _site/
+          cp -r website _site/website
+          cp website/CNAME _site/CNAME
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
