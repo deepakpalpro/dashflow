@@ -12,8 +12,8 @@
 
 Push to `main` runs [`.github/workflows/pages.yml`](../.github/workflows/pages.yml):
 
-1. Jekyll builds `docs/` into `/docs/` on the site
-2. Root `index.html` and `website/` are added; `website/CNAME` is copied to `/CNAME`
+1. Jekyll builds `docs/` into a temp folder `docs-build/`
+2. The workflow assembles `_site/` (runner-owned): `docs-build/` → `_site/docs/`, plus root `index.html` and `website/`
 
 **Alternative:** **Deploy from branch → `/ (root)`**
 
