@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Dashpipe — open-source multi-tenant data pipeline platform. Design flows in a no-code UI, run Kubernetes pipelets, observe with Prometheus and Grafana.">
+  <meta name="description" content="Dashpipe — open-source multi-tenant data pipeline platform. No-code UI, Kubernetes pipelets, LLM dev agent, and MCP tools for Cursor.">
   <meta name="theme-color" content="#0b1220">
   <title>Dashpipe — Open-source data pipelines</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2310b981'/><path d='M8 16h6l2 4 2-8 2 4h6' stroke='%230b1220' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
@@ -43,7 +43,7 @@
           <h1>Pipelet-powered data pipelines without orchestration</h1>
           <p class="lead">
             Design linear Source → Transform → Destination flows in a no-code UI.
-            Execute them as Kubernetes pipelet jobs. Observe every run with Prometheus and Grafana.
+            Execute them as Kubernetes pipelet jobs. Build faster with an optional LLM dev agent and MCP tools for Cursor.
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="docs/getting-started/QUICKSTART.html">Get started</a>
@@ -52,6 +52,7 @@
           <ul class="hero-stats" aria-label="Highlights">
             <li><strong>No-code builder</strong> React UI for pipelines &amp; connectors</li>
             <li><strong>K8s pipelets</strong> Containerized Python steps per stage</li>
+            <li><strong>LLM dev agent</strong> LangGraph pipeline guide &amp; pipelet developer</li>
             <li><strong>Pluggable runtime</strong> Local Compose or Azure AKS</li>
           </ul>
         </div>
@@ -96,16 +97,16 @@
             <p>Reusable REST, storage, and message-bus connectors scoped per tenant.</p>
           </article>
           <article class="feature-card">
+            <h3>LLM dev agent</h3>
+            <p>LangGraph agents to design pipelines, generate Python pipelets, Dockerfiles, and K8s manifests — plus MCP for live ops in Cursor.</p>
+          </article>
+          <article class="feature-card">
             <h3>Observability</h3>
             <p>Prometheus metrics, Grafana dashboards, execution logs, and debug panels in the UI.</p>
           </article>
           <article class="feature-card">
             <h3>Local &amp; cloud</h3>
             <p>RabbitMQ + MySQL + K8s locally, or AKS + Azure Service Bus for production-style runs.</p>
-          </article>
-          <article class="feature-card">
-            <h3>AI &amp; MCP</h3>
-            <p>Optional LangGraph agents and an MCP server for pipeline design and live debugging in Cursor.</p>
           </article>
         </div>
       </div>
@@ -160,7 +161,7 @@
           </article>
           <article>
             <h3>dashpipe-dev-ai-agent</h3>
-            <p>LangGraph pipeline guide, pipelet developer, MCP tools.</p>
+            <p>LLM dev agent — pipeline guide, pipelet developer, Ollama stack, and dashpipe-mcp.</p>
           </article>
           <article>
             <h3>dashpipe-tools</h3>
@@ -183,6 +184,9 @@
         <pre class="code-block"><code># Platform stack (Compose + API + UI)
 ./dashpipe-ci_cd/scripts/localdev.sh start --with-metrics
 
+# Optional: LLM dev agent (Ollama + pipeline guide + MCP)
+./dashpipe-dev-ai-agent/scripts/localdev-ai.sh start
+
 # Optional: real K8s pipelet runs
 ./dashpipe-ci_cd/scripts/localdev.sh start --k8s
 
@@ -191,6 +195,7 @@
         <div class="service-table">
           <div><span>UI</span><code>http://127.0.0.1:5173</code></div>
           <div><span>API</span><code>http://localhost:8080</code></div>
+          <div><span>LLM agent UI</span><code>http://localhost:5174</code></div>
           <div><span>Grafana</span><code>http://localhost:3000</code></div>
         </div>
       </div>
