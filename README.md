@@ -43,7 +43,7 @@ Tenant header: `X-Tenant-Id: T001`
 
 ## Documentation
 
-**Website:** [dashpipe.io](https://dashpipe.io) (GitHub Pages — see [website/README.md](website/README.md) for DNS setup)
+**Website:** [dashpipe.io](https://dashpipe.io) (GitHub Pages — see [docs/PAGES_SETUP.md](docs/PAGES_SETUP.md) for DNS setup)
 
 Full documentation hub: **[docs/README.md](docs/README.md)**
 
