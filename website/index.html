@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashpipe — open-source multi-tenant data pipeline platform. Design flows in a no-code UI, run Kubernetes pipelets, observe with Prometheus and Grafana.">
+  <meta name="theme-color" content="#0b1220">
+  <title>Dashpipe — Open-source data pipelines</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%2310b981'/><path d='M8 16h6l2 4 2-8 2 4h6' stroke='%230b1220' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text">Dashpipe</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span class="sr-only">Menu</span>
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav">
+        <a href="#features">Features</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#components">Monorepo</a>
+        <a href="#quickstart">Quick start</a>
+        <a class="nav-cta" href="https://github.com/deepakpalpro/dashpipe" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Open source · Apache 2.0</p>
+          <h1>Multi-tenant data pipelines without orchestration boilerplate</h1>
+          <p class="lead">
+            Design linear Source → Transform → Destination flows in a no-code UI.
+            Execute them as Kubernetes pipelet jobs. Observe every run with Prometheus and Grafana.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://github.com/deepakpalpro/dashpipe/blob/main/docs/getting-started/QUICKSTART.md" target="_blank" rel="noopener noreferrer">Get started</a>
+            <a class="btn btn-secondary" href="https://github.com/deepakpalpro/dashpipe" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+          </div>
+          <ul class="hero-stats" aria-label="Highlights">
+            <li><strong>No-code builder</strong> React UI for pipelines &amp; connectors</li>
+            <li><strong>K8s pipelets</strong> Containerized Python steps per stage</li>
+            <li><strong>Pluggable runtime</strong> Local Compose or Azure AKS</li>
+          </ul>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="pipeline-card">
+            <div class="pipeline-header">inventory-s3-to-petstore</div>
+            <div class="pipeline-flow">
+              <div class="node source">S3 Source</div>
+              <div class="connector"></div>
+              <div class="node transform">CSV → JSON</div>
+              <div class="connector"></div>
+              <div class="node transform">Field map</div>
+              <div class="connector"></div>
+              <div class="node dest">Webhook</div>
+            </div>
+            <div class="pipeline-meta">
+              <span class="badge running">Running</span>
+              <span>Tenant T001 · K8s Jobs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Built for platform teams and data engineers</h2>
+          <p>Repeatable, tenant-scoped pipelines you can share, meter, and operate — not one-off scripts.</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Pipeline builder</h3>
+            <p>Drag-and-drop linear pipelines, connector wizards, and import/export of JSON bundles.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Pipelet model</h3>
+            <p>Each step is a containerized job with a catalog of sources, transforms, and destinations.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Connector SPI</h3>
+            <p>Reusable REST, storage, and message-bus connectors scoped per tenant.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Observability</h3>
+            <p>Prometheus metrics, Grafana dashboards, execution logs, and debug panels in the UI.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Local &amp; cloud</h3>
+            <p>RabbitMQ + MySQL + K8s locally, or AKS + Azure Service Bus for production-style runs.</p>
+          </article>
+          <article class="feature-card">
+            <h3>AI &amp; MCP</h3>
+            <p>Optional LangGraph agents and an MCP server for pipeline design and live debugging in Cursor.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="architecture" class="section section-alt">
+      <div class="container arch-grid">
+        <div>
+          <h2>Control plane meets Kubernetes execution</h2>
+          <p>
+            The React UI talks to a Spring Boot API that orchestrates pipelet Jobs, tracks executions,
+            and integrates with your message broker and MySQL metadata store.
+          </p>
+          <ul class="arch-list">
+            <li><strong>Presentation</strong> — Pipeline builder, observability panels</li>
+            <li><strong>Control plane</strong> — Tenants, pipelines, connectors, billing hooks</li>
+            <li><strong>Execution</strong> — K8s Jobs per pipelet stage</li>
+            <li><strong>Infrastructure</strong> — RabbitMQ or Service Bus, MySQL, Prometheus</li>
+          </ul>
+          <a class="text-link" href="https://github.com/deepakpalpro/dashpipe/blob/main/docs/architecture/OVERVIEW.md" target="_blank" rel="noopener noreferrer">Architecture overview →</a>
+        </div>
+        <div class="arch-diagram" aria-hidden="true">
+          <div class="layer">UI · React builder</div>
+          <div class="arrow">↓</div>
+          <div class="layer highlight">API · Spring Boot</div>
+          <div class="arrow">↓</div>
+          <div class="layer-row">
+            <div class="layer small">K8s pipelets</div>
+            <div class="layer small">Broker</div>
+            <div class="layer small">MySQL</div>
+          </div>
+          <div class="arrow">↓</div>
+          <div class="layer">Prometheus · Grafana · ELK</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="components" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>dashpipe-suite monorepo</h2>
+          <p>Five components, one localdev entrypoint.</p>
+        </div>
+        <div class="component-grid">
+          <article>
+            <h3>dashpipe-platform</h3>
+            <p>API, UI, SPI, broker, and pipelet catalog.</p>
+          </article>
+          <article>
+            <h3>dashpipe-ci_cd</h3>
+            <p>localdev.sh, K8s manifests, Azure Bicep, smoke tests.</p>
+          </article>
+          <article>
+            <h3>dashpipe-dev-ai-agent</h3>
+            <p>LangGraph pipeline guide, pipelet developer, MCP tools.</p>
+          </article>
+          <article>
+            <h3>dashpipe-tools</h3>
+            <p>Prometheus, Grafana, and ELK compose profiles.</p>
+          </article>
+          <article>
+            <h3>dashpipe-demo</h3>
+            <p>Petstore mocks, LocalStack, sample pipeline JSON.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="quickstart" class="section section-alt">
+      <div class="container quickstart-grid">
+        <div>
+          <h2>Run locally in minutes</h2>
+          <p>Prerequisites: Docker, Java 21, Node 20. Optional: a local Kubernetes cluster for real pipelet Jobs.</p>
+        </div>
+        <pre class="code-block"><code># Platform stack (Compose + API + UI)
+./dashpipe-ci_cd/scripts/localdev.sh start --with-metrics
+
+# Optional: real K8s pipelet runs
+./dashpipe-ci_cd/scripts/localdev.sh start --k8s
+
+# Flagship demo: S3 → Petstore inventory
+./dashpipe-ci_cd/scripts/inventory-pipeline-e2e.sh</code></pre>
+        <div class="service-table">
+          <div><span>UI</span><code>http://127.0.0.1:5173</code></div>
+          <div><span>API</span><code>http://localhost:8080</code></div>
+          <div><span>Grafana</span><code>http://localhost:3000</code></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-section">
+      <div class="container cta-inner">
+        <h2>Ready to build your first pipeline?</h2>
+        <p>Explore the docs hub, import a sample from dashpipe-demo, or contribute a new pipelet.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/deepakpalpro/dashpipe/blob/main/docs/README.md" target="_blank" rel="noopener noreferrer">Documentation</a>
+          <a class="btn btn-secondary" href="https://github.com/deepakpalpro/dashpipe/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contribute</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>Dashpipe</strong>
+        <p>Apache License 2.0</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="https://github.com/deepakpalpro/dashpipe" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://github.com/deepakpalpro/dashpipe/blob/main/docs/README.md" target="_blank" rel="noopener noreferrer">Docs</a>
+        <a href="https://github.com/deepakpalpro/dashpipe/blob/main/SECURITY.md" target="_blank" rel="noopener noreferrer">Security</a>
+        <a href="https://github.com/deepakpalpro/dashpipe/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer">Code of conduct</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,7 +1,8 @@
 # dashpipe-suite
 
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![CI](https://github.com/your-org/dashpipe-suite/actions/workflows/platform.yml/badge.svg)](https://github.com/your-org/dashpipe-suite/actions)
+[![CI](https://github.com/deepakpalpro/dashpipe/actions/workflows/platform.yml/badge.svg)](https://github.com/deepakpalpro/dashpipe/actions)
+[![Website](https://img.shields.io/badge/website-dashpipe.io-10b981)](https://dashpipe.io)
 
 **Dashpipe** is an open-source, multi-tenant data pipeline platform. Design linear Source → Transform → Destination flows in a no-code UI, execute them as Kubernetes pipelet jobs, and observe runs with Prometheus and Grafana.
 
@@ -41,6 +42,8 @@ Built for data engineers, platform teams, and integrators who need repeatable, t
 Tenant header: `X-Tenant-Id: T001`
 
 ## Documentation
+
+**Website:** [dashpipe.io](https://dashpipe.io) (GitHub Pages — see [website/README.md](website/README.md) for DNS setup)
 
 Full documentation hub: **[docs/README.md](docs/README.md)**
 

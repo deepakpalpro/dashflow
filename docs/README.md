@@ -8,7 +8,7 @@ Welcome to the Dashpipe documentation hub. Pick a path based on your role.
 |---------|------------|
 | **Executive / product stakeholder** | [Vision](overview/VISION.md) · [Roadmap](overview/ROADMAP.md) · [Use cases](overview/USE_CASES.md) |
 | **Architect / tech lead** | [Architecture overview](architecture/OVERVIEW.md) · [Monorepo layout](architecture/MONOREPO.md) · [Full architecture](../dashpipe-platform/docs/ARCHITECTURE.md) |
-| **Developer trying the product** | [Quickstart](getting-started/QUICKSTART.md) |
+| **Developer trying the product** | [Quickstart](getting-started/QUICKSTART.md) · [Website](https://dashpipe.io) |
 | **Platform engineer / SRE** | [Deployment](operations/DEPLOYMENT.md) · [Observability](operations/OBSERVABILITY.md) |
 | **Open-source contributor** | [Contributing](../CONTRIBUTING.md) · [Development setup](contributing/DEVELOPMENT.md) |
 | **AI / agent integrator** | [AI and MCP](getting-started/AI_AND_MCP.md) |
